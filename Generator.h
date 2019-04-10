@@ -37,10 +37,10 @@ void Generator::write_to_file() {
 	std::fstream out;
 	std::string file_name;
 	if (this->ug) {
-		file_name = "UG_" + std::to_string(this->v_nr) + "_" + std::to_string(this->saturation) + ".txt";
+		file_name = "UG_" + std::to_string(this->v_nr) + "_" + std::to_string((int)(round(this->saturation * 100))) + ".txt";
 	}
 	else if (this->dag) {
-		file_name = "DAG_" + std::to_string(this->v_nr) + "_" + std::to_string(this->saturation) + ".txt";
+		file_name = "DAG_" + std::to_string(this->v_nr) + "_" + std::to_string((int)(round(this->saturation * 100))) + ".txt";
 	}
 	out.open(file_name, std::ios::out);
 	out << this->v_nr << std::endl;
@@ -73,6 +73,7 @@ class Ug: public Generator {
 	public:
 		Ug(int v_nr, float saturation);
 		void gen();
+		void auto_gen();
 };
 
 Ug::Ug(int v_nr, float saturation): Generator(v_nr, saturation) {
@@ -109,10 +110,17 @@ void Ug::gen() {
 	columns = NULL;
 }
 
+void Ug::auto_gen() {
+	this->gen();
+	this->write_to_file();
+	this->display();
+}
+
 class Dag: public Generator {
 	public:
 		Dag(int v_nr, float saturation);
 		void gen();
+		void auto_gen();
 };
 
 Dag::Dag(int v_nr, float saturation): Generator(v_nr, saturation) {
@@ -147,4 +155,10 @@ void Dag::gen() {
 	rows = NULL;
 	delete [] columns;
 	columns = NULL;
+}
+
+void Dag::auto_gen() {
+	this->gen();
+	this->write_to_file();
+	this->display();
 }

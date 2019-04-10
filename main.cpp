@@ -6,8 +6,10 @@
 
 #include "Utility.h"
 #include "Generator.h"
+#include "Graph.h"
 
 int main() {
-	std::cout << "hello graphs" << std::endl;
+	Ug * test = new Ug(8, 0.73);
+	test->auto_gen();
 	return 0;
 }
