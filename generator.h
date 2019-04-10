@@ -1,4 +1,6 @@
 class Generator {
+	protected:
+		void write_to_file();
 	public:
 		Generator(int v_nr, float saturation);
 		~Generator();
@@ -6,7 +8,6 @@ class Generator {
 		float saturation;
 		int ** graph;
 		bool ug, dag;
-		void write_to_file();
 };
 
 Generator::Generator(int v_nr, float saturation) {
@@ -53,4 +54,13 @@ void Generator::write_to_file() {
 		out << std::endl;
 	}
 	out.close();
+}
+
+class Ug: public Generator {
+	public:
+		Ug(int v_nr, float saturation);
+};
+
+Ug::Ug(int v_nr, float saturation): Generator(v_nr, saturation) {
+	this->ug = true;
 }
