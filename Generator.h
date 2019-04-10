@@ -7,6 +7,7 @@ class Generator {
 		int ** graph;
 		bool ug, dag;
 		void write_to_file();
+		void display();
 };
 
 Generator::Generator(int v_nr, float saturation) {
@@ -21,8 +22,6 @@ Generator::Generator(int v_nr, float saturation) {
 			this->graph[i][j] = 0;
 		}
 	}
-	this->ug = false;
-	this->dag = false;
 }
 
 Generator::~Generator() {
@@ -56,6 +55,20 @@ void Generator::write_to_file() {
 	out.close();
 }
 
+void Generator::display() {
+	for (int i = 0; i < this->v_nr; i++) {
+		for (int j = 0; j < this->v_nr; j++) {
+			if (this->graph[i][j] != -1) {
+				std::cout << " " << this->graph[i][j] << " ";
+			}
+			else {
+				std::cout << this->graph[i][j] << " ";
+			}
+		}
+		std::cout << std::endl;
+	}
+}
+
 class Ug: public Generator {
 	public:
 		Ug(int v_nr, float saturation);
@@ -64,6 +77,7 @@ class Ug: public Generator {
 
 Ug::Ug(int v_nr, float saturation): Generator(v_nr, saturation) {
 	this->ug = true;
+	this->dag = false;
 }
 
 void Ug::gen() {
@@ -87,6 +101,46 @@ void Ug::gen() {
 	for (int i = 0; i < e_nr; i++) {
 		this->graph[rows[i]][columns[i]] = 1;
 		this->graph[columns[i]][rows[i]] = 1;
+	}
+
+	delete [] rows;
+	rows = NULL;
+	delete [] columns;
+	columns = NULL;
+}
+
+class Dag: public Generator {
+	public:
+		Dag(int v_nr, float saturation);
+		void gen();
+};
+
+Dag::Dag(int v_nr, float saturation): Generator(v_nr, saturation) {
+	this->dag = true;
+	this->ug = false;
+}
+
+void Dag::gen() {
+	int * rows, * columns;
+	rows = new int [e_cardinality];
+	columns = new int [e_cardinality];
+	int count = 0;
+	for (int i = 0; i < v_nr; i++) {
+		for (int j = i + 1; j < v_nr; j++) {
+			rows[count] = i;
+			columns[count++] = j;
+		}
+	}
+
+	Utility * shuffler = new Utility;
+	shuffler->shuffle(rows, e_cardinality);
+	shuffler->shuffle(columns, e_cardinality);
+	delete shuffler;
+	shuffler = NULL;
+
+	for (int i = 0; i < e_nr; i++) {
+		this->graph[rows[i]][columns[i]] = 1;
+		this->graph[columns[i]][rows[i]] = -1;
 	}
 
 	delete [] rows;
