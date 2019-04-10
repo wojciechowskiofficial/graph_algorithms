@@ -9,4 +9,4 @@ basic program functionalities:
 		@incidence list
 	*performing topological sort on given DAGger
 
-program also measures times of performing "search edge" method and "perform topological sort method".
+program also measures times of performing "search edge" method and "perform topological sort" method.
