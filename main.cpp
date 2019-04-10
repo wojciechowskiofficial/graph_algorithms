@@ -4,8 +4,8 @@
 #include <fstream>
 #include <ctime>
 
-#include "generator.h"
 #include "utility.h"
+#include "generator.h"
 
 int main() {
 	std::cout << "hello graphs" << std::endl;
