@@ -9,7 +9,6 @@
 #include "Graph.h"
 
 int main() {
-	Ug * test = new Ug(8, 0.73);
-	test->auto_gen();
+	std::cout << "hello graphs" << std::endl;
 	return 0;
 }
