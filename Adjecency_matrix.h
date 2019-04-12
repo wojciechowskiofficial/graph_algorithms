@@ -3,6 +3,7 @@ class Adjecency_matrix: public Graph {
 		Adjecency_matrix();
 		~Adjecency_matrix();
 		void read_from_file(std::string file_name);
+		bool is_edge(int a, int b);
 		void display();
 		int ** graph;
 };
@@ -69,4 +70,9 @@ void Adjecency_matrix::display() {
 		}
 		std::cout << std::endl;
 	}
+}
+
+bool Adjecency_matrix::is_edge(int a, int b) {
+	if (this->graph[a][b] == 1 || this->graph[a][b] == -1) return true;
+	else return false;
 }
