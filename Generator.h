@@ -52,6 +52,7 @@ void Generator::write_to_file() {
 		}
 		out << std::endl;
 	}
+	out << "$" << std::endl;
 	out.close();
 }
 
