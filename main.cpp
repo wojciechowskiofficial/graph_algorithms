@@ -10,7 +10,7 @@
 #include "Generator.h"
 #include "Graph.h"
 #include "Adjecency_matrix.h"
-#include "Incidence_matrix.h"
+#include "Incidence_list.h"
 
 int main() {
 	std::cout << "hello graphs" << std::endl;
