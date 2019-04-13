@@ -11,6 +11,8 @@
 #include "Graph.h"
 #include "Adjecency_matrix.h"
 #include "Incidence_list.h"
+#include "Edge.h"
+#include "Edge_list.h"
 
 int main() {
 	std::cout << "hello graphs" << std::endl;
