@@ -17,12 +17,17 @@ Adjecency_matrix::Adjecency_matrix() {
 }
 
 Adjecency_matrix::~Adjecency_matrix() {
-	for (int i = 0; i < this->v_nr; i++) {
-		delete [] this->graph[i];
-		this->graph[i] = NULL;
+	if (this->graph != NULL) {
+		std::cout << "K" << std::endl;
+		for (int i = 0; i < this->v_nr; i++) {
+			if (this->graph[i] != NULL) {
+				delete [] this->graph[i];
+				this->graph[i] = NULL;
+			}
+		}
+		delete [] this->graph;
+		this->graph = NULL;
 	}
-	delete [] this->graph;
-	this->graph = NULL;
 }
 
 void Adjecency_matrix::read_from_file(std::string file_name) {
