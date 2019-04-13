@@ -1,9 +1,11 @@
 class Incidence_list: public Graph {
 	public:
 		Incidence_list();
+		~Incidence_list();
 		std::vector<int> * graph;
 		void read_from_file(std::string file_name);
 		void display();
+		bool is_edge(int a, int b);
 };
 
 Incidence_list::Incidence_list() {
@@ -11,6 +13,17 @@ Incidence_list::Incidence_list() {
 	this->im = false;
 	this->el = false;
 	this->il = true;
+	this->graph = NULL;
+}
+
+Incidence_list::~Incidence_list() {
+	if (this->graph != NULL) {
+		for (int i = 0; i < this->v_nr; i++) {
+			std::vector<int>().swap(this->graph[i]);
+		}
+		delete [] this->graph;
+		this->graph = NULL;
+	}
 }
 
 void Incidence_list::read_from_file(std::string file_name) {
@@ -48,4 +61,8 @@ void Incidence_list::display() {
 		}
 		std::cout << std::endl;
 	}
+}
+
+bool Incidence_list::is_edge(int a, int b) {
+	return std::find(this->graph[a].begin(), this->graph[a].end(), b) != this->graph[a].end();
 }

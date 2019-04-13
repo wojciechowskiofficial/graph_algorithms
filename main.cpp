@@ -3,11 +3,14 @@
 #include <cstdlib>
 #include <fstream>
 #include <ctime>
+#include <vector>
+#include <algorithm>
 
 #include "Utility.h"
 #include "Generator.h"
 #include "Graph.h"
 #include "Adjecency_matrix.h"
+#include "Incidence_matrix.h"
 
 int main() {
 	std::cout << "hello graphs" << std::endl;
