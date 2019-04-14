@@ -13,6 +13,7 @@
 #include "Incidence_list.h"
 #include "Edge.h"
 #include "Edge_list.h"
+#include "Incidence_matrix.h"
 
 int main() {
 	std::cout << "hello graphs" << std::endl;
