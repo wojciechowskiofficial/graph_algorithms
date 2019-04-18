@@ -3,8 +3,6 @@ class Incidence_matrix: public Graph {
 		Incidence_matrix();
 		~Incidence_matrix();
 		int ** graph;
-		Edge ** e_vec;
-		int find_edge(int a, int b);
 		void display();
 		void read_from_file(std::string file_name);
 		bool is_edge(int a, int b);
@@ -19,14 +17,6 @@ Incidence_matrix::Incidence_matrix() {
 }
 
 Incidence_matrix::~Incidence_matrix() {
-	if (this->e_vec != NULL) {
-		for (int i = 0; i < this->e_nr; i++) {
-			delete this->e_vec[i];
-			this->e_vec[i] = NULL;
-		}
-		delete [] this->e_vec;
-		this->e_vec = NULL;
-	}
 	if (this->graph != NULL) {
 		for (int i = 0; i < this->v_nr; i++) {
 			delete [] this->graph[i];
@@ -35,15 +25,6 @@ Incidence_matrix::~Incidence_matrix() {
 		delete [] this->graph;
 		this->graph = NULL;
 	}
-}
-
-int Incidence_matrix::find_edge(int a, int b) {
-	for (int i = 0; i < this->e_nr; i++) {
-		if (this->e_vec[i]->a == a && this->e_vec[i]->b == b) {
-			return i;
-		}
-	}
-	return -1;
 }
 
 void Incidence_matrix::read_from_file(std::string file_name) {
@@ -63,26 +44,19 @@ void Incidence_matrix::read_from_file(std::string file_name) {
 			this->graph[i][j] = 0;
 		}
 	}
-	this->e_vec = new Edge * [this->e_nr];
-	for (int i = 0; i < this->e_nr; i++) {
-		this->e_vec[i] = new Edge();
-		e_vec[i]->a = -1;
-		e_vec[i]->b = -1;
-	}
+
 	int tmp, counter = 0;
 	for (int i = 0; i < this->v_nr; i++) {
 		for (int j = 0; j < this->v_nr; j++) {
 			in >> tmp;
 			if (tmp == 1) {
-				if (this->find_edge(i, j) == -1 && this->find_edge(j, i) == -1) {
-					this->e_vec[counter]->a = i;
-					this->e_vec[counter]->b = j;
-					this->graph[i][this->find_edge(i, j)] = 1;
+				if (this->is_edge(i, j) == false && this->is_edge(j, i) == false) {
+					this->graph[i][counter] = 1;
 					if (file_name[0] == 'U') {
-						this->graph[j][this->find_edge(i, j)] = 1;
+						this->graph[j][counter] = 1;
 					}
 					else if (file_name[0] == 'D') {
-						this->graph[j][this->find_edge(i, j)] = -1;
+						this->graph[j][counter] = -1;
 					}
 					counter++;
 				}
@@ -97,11 +71,6 @@ void Incidence_matrix::read_from_file(std::string file_name) {
 }
 
 void Incidence_matrix::display() {
-	for (int i = 0; i < this->e_nr; i++) {
-		this->e_vec[i]->display();
-		std::cout << " ";
-	}
-	std::cout << std::endl;
 	for (int i = 0; i < this->v_nr; i++) {
 		for (int j = 0; j < this->e_nr; j++) {
 			if (this->graph[i][j] == -1) {
@@ -116,12 +85,13 @@ void Incidence_matrix::display() {
 }
 
 bool Incidence_matrix::is_edge(int a, int b) {
-	int anwser;
-	anwser = this->find_edge(a, b);
-	if (anwser == -1) {
+	if (a == b) {
 		return false;
 	}
-	else {
-		return true;
+	for (int i = 0; i < this->e_nr; i++) {
+		if (this->graph[a][i] != 0 && this->graph[b][i] != 0) {
+			return true;
+		}
 	}
+	return false;
 }
