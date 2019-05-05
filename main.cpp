@@ -5,6 +5,7 @@
 #include <ctime>
 #include <vector>
 #include <algorithm>
+#include <string>
 
 #include "Utility.h"
 #include "Generator.h"
@@ -14,8 +15,9 @@
 #include "Edge.h"
 #include "Edge_list.h"
 #include "Incidence_matrix.h"
+#include "perform.h"
 
 int main() {
-	std::cout << "hello graphs" << std::endl;
+	//perform();
 	return 0;
 }
